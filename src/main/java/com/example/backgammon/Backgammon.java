@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 /**
  * @author Adam Heaney
- * @version 1.1
- * Finish date: 1.0: 12/7/23 | 1.1: 1/28/24
- * This class is the ultimate class that makes the game of backgammon the game of backgammon. This class stores a backgammon board and the dice,
- * it contains the methods for starting a game, and the logic for playing it through. As of now, it needs some testing, but I'm pretty sure it
- * works completely. The game logic functions as so: After getting the rolls, the game uses a method to get all possible moves. There are some
- * funky rules to backgammon, so there are instances where you need to get the rolls' second play (hard to explain) to make sure that the legal
- * move is played. So, after sifting through the rules and through the possible moves you can make, it comes out with a list of all possible
- * moves for that turn. Then, the user can only input the valid moves. This class is the comprehensive class of the program, where every other
- * class comes together to do their jobs-- BackgammonBoard, Team, Piece, Dice all come together to form this beautiful work of art.
+ * @version 1.0
+ * Finish date: 1.0: 1/14/25
  * 
- * Changelog: 1.1: Added bot functionality: play versus a bot, bot versus bot, or player versus player.
+ * This is a rework of my other backgammon project, but this time it's a class that can be used in a Spring Boot application. Some of the normal functionality
+ * has been changed up, but the core of the game is still the same. The difference is this allows for the game to be showcased on the web!
+ * 
  */
 public class Backgammon {
 
@@ -22,6 +17,12 @@ public class Backgammon {
      * The backgammon board being used
      */
     private BackgammonBoard b;
+
+    /**
+     * current game state in a String form
+     */
+    String gameState;
+
     /**
      * the dice being used for generating the rolls
      */
@@ -32,17 +33,11 @@ public class Backgammon {
      */
     BackgammonBot bot;
 
-    private int turn;
-
     /**
      * player's turn?
      */
     boolean playerTurn = true;
 
-    /**
-     * waiting for player to input move
-     */
-    boolean waiting = false;
 
     ArrayList<int[]> allMoves;
 
@@ -70,7 +65,7 @@ public class Backgammon {
     }
 
     //=========================================
-    //          METHODS FOR ROLLS // Move
+    //          METHODS FOR ROLLS // Getters
     //=========================================
 
     public String getRolls() {
@@ -79,6 +74,10 @@ public class Backgammon {
 
     public BackgammonBoard getBoard() {
         return b;
+    }
+
+    public String getGameState() {
+        return gameState;
     }
 
     /**
@@ -143,7 +142,7 @@ public class Backgammon {
         if(b.getTeams()[b.getTurn()].getEatenPieces() == null){
             //if you have no moves, then make all the rolls -1
             if(allMoves.isEmpty()) {
-                //System.out.println("You have no valid moves :(");
+                gameState += "\nYou have no valid moves :(";
                 for(int i = 0; i < rolls.length; i++) {
                     rolls[i] = -1;
                 }
@@ -160,7 +159,7 @@ public class Backgammon {
                         }
                     }
                     if(!hasMove) {
-                        //System.out.println("No moves for roll " + rolls[r] +". :( \nRemoved roll " + rolls[r]);
+                        gameState+="\nNo moves for roll " + rolls[r] +". :( \nRemoved roll " + rolls[r];
                         rolls[r] = -1;
                     }
                 }
@@ -188,7 +187,7 @@ public class Backgammon {
                     allMoves.add(temp);
                     for(int r = 0; r < rolls.length; r++) {
                         if(rolls[r] != allMoves.get(0)[0] && rolls[r] != -1) {
-                            //System.out.println("Removed roll " + rolls[r] + " since you can only play one square!");
+                            gameState+= "\nRemoved roll " + rolls[r] + " since you can only play one square!";
                             rolls[r] = -1;
                         }
                     }
@@ -309,10 +308,10 @@ public class Backgammon {
      * @param bot
      */
     private void playAgainstBot() {
-        //System.out.println("Welcome to the game of Backgammon! I will not be restating the rules as I assume you know them if you're playing this. The code for this game was created from scratch by Adam Heaney using only Java and dedication. \n\nHow to play: When it is your turn to move, input the roll and coordinates as follows: \"roll x y\". Here is what the board looks like:\n\n" + b.boardString() + "\nThe two teams are B and W (black and white). Black's home is the top row and White's is the bottom. E is how many of your pieces are eaten and I is how many of your pieces are home. You are the white team.");
-        turn = 1;
+        gameState+="Welcome to the game of Backgammon! I will not be restating the rules as I assume you know them if you're playing this. The code for this game was created from scratch by Adam Heaney using only Java and dedication. \n\nHow to play: When it is your turn to move, input the roll and coordinates as follows: \"roll x y\". Here is what the board looks like:\n\n" + b.boardString() + "\nThe two teams are B and W (black and white). Black's home is the top row and White's is the bottom. E is how many of your pieces are eaten and I is how many of your pieces are home. You are the white team.";
+        int turn = 1;
         bot.retrieveBoard(b);
-        //System.out.println("---------------------------------------\n              TURN " + turn + "\n---------------------------------------");
+        gameState+="\n---------------------------------------\n              TURN " + turn + "\n---------------------------------------";
         turn++;
         botGameLoop();
     }
@@ -324,10 +323,10 @@ public class Backgammon {
     private void botGameLoop() {
         if(!(b.getTeams()[0].getNumActivePieces() > 0 && b.getTeams()[1].getNumActivePieces() > 0)) {
             if(!(b.getTeams()[0].getNumActivePieces() > 0)) {
-                System.out.println("YOU WIN!");
+                gameState+= "\nYOU WIN!";
             }
             else if(!(b.getTeams()[1].getNumActivePieces() > 0)) {
-                System.out.println("You lose :(");
+                gameState += "\nYou lose :(";
             }
             b = new BackgammonBoard();
             return;
@@ -337,25 +336,24 @@ public class Backgammon {
         getValidMoves();
 
         if(b.getTurn() == 0) {
-            //System.out.println("It is your turn.");
-            //System.out.println("You rolled " + rollsToString());
+            gameState+= "\nIt is your turn.";
+            gameState += "\nYou rolled " + rollsToString();
             if(rolls[0] == rolls[1]) {
-                //System.out.println("You rolled doubles!");
+                gameState += "\nYou rolled doubles!";
                 rolls[2] = rolls[0];
                 rolls[3] = rolls[0];
             }
-            //System.out.println("Input your desired move. You have the rolls " + rollsToString());
-            waiting = true;
+            gameState += "\nInput your desired move. You have the rolls " + rollsToString();
         }
         else {
-            //System.out.println("It is " + bot.getName() + "'s turn.");
-            //System.out.println(bot.getName() + " rolled " + rollsToString());
+            gameState+="\nIt is " + bot.getName() + "'s turn.";
+            gameState += "\n" + bot.getName() + " rolled " + rollsToString();
             if(rolls[0] == rolls[1]) {
-                //System.out.println(bot.getName() + " rolled doubles!");
+                gameState+= "\n" + bot.getName() + " rolled doubles!";
                 rolls[2] = rolls[0];
                 rolls[3] = rolls[0];
             }
-            //System.out.println(b.boardString());
+            gameState+= "\n"+ b.boardString();
 
             //the while loop for the bot's turn
             while(!rollsIsEmpty() && !allMoves.isEmpty()) {
@@ -371,7 +369,7 @@ public class Backgammon {
                     allMoves = new ArrayList<>(b.getAllPossibleMoves(rolls));
                     getValidMoves();
                 }
-                //System.out.println(b.boardString());
+                gameState+= "\n"+ b.boardString();
             }
             b.switchTurn();
             botGameLoop();
@@ -387,7 +385,7 @@ public class Backgammon {
     private int[] botTurn(BackgammonBot bot, ArrayList<int[]> allMoves) {
         bot.evaluateMoves(allMoves);
         int[] botMove = bot.getMove();
-        //System.out.println("The bot played the piece at coordinates " + botMove[1] + " " + botMove[2] + " with roll " + botMove[0]);
+        gameState+= "\nThe bot played the piece at coordinates " + botMove[1] + " " + botMove[2] + " with roll " + botMove[0];
         return botMove;
     }
 
@@ -408,14 +406,14 @@ public class Backgammon {
             try{ 
                 moveArray[i] = Integer.parseInt(moveArraystr[i]);
             } catch (NumberFormatException e) {
-                //System.out.println("##########################\nINVALID INPUT\n##########################\nRemember, the format is \"roll X Y\" and don't forget to take a better look at the board. You have the rolls " + rollsToString());
+                gameState+="\n##########################\nINVALID INPUT\n##########################\nRemember, the format is \"roll X Y\" and don't forget to take a better look at the board. You have the rolls " + rollsToString();
                 return "Move " + Arrays.toString(moveArraystr) + " invalid" + "  ";
             }
         }
         
         //checks if the input is valid
         if(!hasMove(moveArray, allMoves)) {
-            //System.out.println("##########################\nINVALID INPUT\n##########################\nRemember, the format is \"roll X Y\" and don't forget to take a better look at the board. You have the rolls " + rollsToString());
+            gameState+="\n##########################\nINVALID INPUT\n##########################\nRemember, the format is \"roll X Y\" and don't forget to take a better look at the board. You have the rolls " + rollsToString();
             return "Move " + Arrays.toString(moveArray) + " invalid" + "  ";
         }
 
@@ -433,7 +431,7 @@ public class Backgammon {
             b.switchTurn();
             botGameLoop();
         }
-        //System.out.println(b.boardString());
+        gameState+= "\n"+ b.boardString();
         return "Move VALID";
     }
 }

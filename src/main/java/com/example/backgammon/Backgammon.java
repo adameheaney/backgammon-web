@@ -421,6 +421,7 @@ public class Backgammon {
 
   
         //does the move
+        gameState+= "\n Made the move " + Arrays.toString(moveArray);
         rolls[indexOfRoll(moveArray[0])] = -1;
         if(b.getTeams()[b.getTurn()].getEatenPieces() == null)
             b.movePiece(moveArray[1], moveArray[2], moveArray[0]);

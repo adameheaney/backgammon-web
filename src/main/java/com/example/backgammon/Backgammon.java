@@ -421,7 +421,7 @@ public class Backgammon {
 
   
         //does the move
-        gameState+= "\n Made the move " + Arrays.toString(moveArray);
+        gameState+= "\nMade the move " + Arrays.toString(moveArray);
         rolls[indexOfRoll(moveArray[0])] = -1;
         if(b.getTeams()[b.getTurn()].getEatenPieces() == null)
             b.movePiece(moveArray[1], moveArray[2], moveArray[0]);
@@ -436,6 +436,7 @@ public class Backgammon {
             botGameLoop();
         }
         gameState+= "\n"+ b.boardString();
+        gameState+= "\nRemaining rolls: " + rollsToString();
         return "Move VALID";
     }
 }

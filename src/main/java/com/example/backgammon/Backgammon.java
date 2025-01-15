@@ -400,7 +400,7 @@ public class Backgammon {
         if(!this.playerTurn) {
             return "Not the player's turn";
         }
-        String moveString = playerMove.replace("\"", "");
+        String moveString = playerMove.replace("+", " ").replace("=", "");
         
         String[] moveArraystr = moveString.split(" ");
         int[] moveArray = new int[moveArraystr.length];

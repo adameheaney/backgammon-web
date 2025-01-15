@@ -330,6 +330,7 @@ public class Backgammon {
                 gameState += "\nYou lose :(";
             }
             b = new BackgammonBoard();
+            playAgainstBot();
             return;
         } 
         rolls = d.rolls(2);
@@ -442,6 +443,7 @@ public class Backgammon {
                     gameState += "\nYou lose :(";
                 }
                 b = new BackgammonBoard();
+                playAgainstBot();
                 return "Game over";
             } 
         }

@@ -61,6 +61,7 @@ public class Backgammon {
         d = new Dice();
         allMoves = new ArrayList<>();
         bot = new RandomBot();
+        gameState = "";
         playAgainstBot();
     }
 
@@ -369,8 +370,9 @@ public class Backgammon {
                     allMoves = new ArrayList<>(b.getAllPossibleMoves(rolls));
                     getValidMoves();
                 }
-                gameState+= "\n"+ b.boardString();
             }
+            gameState+= "\n"+ b.boardString();
+            gameState+= "\n---------------------------------------";
             b.switchTurn();
             botGameLoop();
         } 
@@ -429,6 +431,7 @@ public class Backgammon {
         }
         else{
             b.switchTurn();
+            gameState = "";
             botGameLoop();
         }
         gameState+= "\n"+ b.boardString();

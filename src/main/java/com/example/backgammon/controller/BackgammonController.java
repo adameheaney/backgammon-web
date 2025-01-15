@@ -24,8 +24,12 @@ public class BackgammonController {
     @GetMapping("/")
     public String home() {
         String[] boardStrings = game.getBoard().boardString().split("\\n");
-        String rolls = game.getRolls();
-        return "<h1>" + boardStrings[0] + "</h1> <h1>" + boardStrings[1] + "</h1> <h1>" + rolls + "</h1>";
+        String[] gameStates = game.getGameState().split("\\n");
+        String html = "";
+        for (String gameState : gameStates) {
+            html += "<h3>" + gameState + "</h3>";
+        }
+        return html;
     }
 
     @GetMapping("/state")

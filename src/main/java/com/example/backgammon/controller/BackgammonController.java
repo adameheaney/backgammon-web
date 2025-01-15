@@ -23,7 +23,6 @@ public class BackgammonController {
 
     @GetMapping("/")
     public String home() {
-        String[] boardStrings = game.getBoard().boardString().split("\\n");
         String[] gameStates = game.getGameState().split("\\n");
         String html = "";
         for (String gameState : gameStates) {

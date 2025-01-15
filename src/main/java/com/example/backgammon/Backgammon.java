@@ -409,7 +409,7 @@ public class Backgammon {
                 moveArray[i] = Integer.parseInt(moveArraystr[i]);
             } catch (NumberFormatException e) {
                 gameState+="\n##########################\nINVALID INPUT\n##########################\nRemember, the format is \"roll X Y\" and don't forget to take a better look at the board. You have the rolls " + rollsToString();
-                return "Move " + Arrays.toString(moveArraystr) + " invalid" + "  ";
+                return "Move " + Arrays.toString(moveArray) + " invalid" + " couldn't parse";
             }
         }
         

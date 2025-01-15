@@ -434,6 +434,16 @@ public class Backgammon {
         if(!rollsIsEmpty()) {
             allMoves = new ArrayList<>(b.getAllPossibleMoves(rolls));
             getValidMoves();
+            if(!(b.getTeams()[0].getNumActivePieces() > 0 && b.getTeams()[1].getNumActivePieces() > 0)) {
+                if(!(b.getTeams()[0].getNumActivePieces() > 0)) {
+                    gameState+= "\nYOU WIN!";
+                }
+                else if(!(b.getTeams()[1].getNumActivePieces() > 0)) {
+                    gameState += "\nYou lose :(";
+                }
+                b = new BackgammonBoard();
+                return "Game over";
+            } 
         }
         else{
             b.switchTurn();

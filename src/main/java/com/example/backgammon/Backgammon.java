@@ -345,6 +345,11 @@ public class Backgammon {
                 rolls[3] = rolls[0];
             }
             gameState += "\nInput your desired move. You have the rolls " + rollsToString();
+            if(allMoves.isEmpty()) {
+                gameState+="\nYou have no valid moves :(";
+                b.switchTurn();
+                botGameLoop();
+            }
         }
         else {
             gameState+="\nIt is " + bot.getName() + "'s turn.";

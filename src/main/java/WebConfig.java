@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
         // Allow all paths to be accessed from your React app running on localhost:5173
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:5173", "adameheaney.github.io")  // Allow requests from React
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "POST", "OPTIONS", "PUT", "DELETE")
                 .allowedHeaders("*"); // Allow all headers
     }
 }

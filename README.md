@@ -7,14 +7,6 @@ Welcome to my Backgammon project! This project is a digital implementation of th
 
 The game is deployed on Heroku. You can play it [here](https://adameheaney.github.io/#/project/backgammon).
 
-## Contributing
-
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Contact
 
 For any questions or feedback, please contact [your email].

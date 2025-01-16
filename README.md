@@ -1,6 +1,6 @@
 # Backgammon
 
-Welcome to the Backgammon project! This project is a digital implementation of the classic board game Backgammon, modified to run on the web. It builds upon our previous Backgammon project with enhancements for web deployment. Play against the computer on this Java recreation of Backgammon!
+Welcome to my Backgammon project! This project is a digital implementation of the classic board game Backgammon, modified to run on the web. It builds upon my previous Backgammon project with enhancements for web deployment. Play against the computer on this Java recreation of Backgammon!
 
 
 ## Usage

@@ -324,10 +324,10 @@ public class Backgammon {
     private void botGameLoop() {
         if(!(b.getTeams()[0].getNumActivePieces() > 0 && b.getTeams()[1].getNumActivePieces() > 0)) {
             if(!(b.getTeams()[0].getNumActivePieces() > 0)) {
-                gameState+= "\nYOU WIN!";
+                gameState+= "\nYOU WIN! \n \n";
             }
             else if(!(b.getTeams()[1].getNumActivePieces() > 0)) {
-                gameState += "\nYou lose :(";
+                gameState += "\nYou lose :( \n \n";
             }
             b = new BackgammonBoard();
             playAgainstBot();
@@ -437,10 +437,10 @@ public class Backgammon {
             getValidMoves();
             if(!(b.getTeams()[0].getNumActivePieces() > 0 && b.getTeams()[1].getNumActivePieces() > 0)) {
                 if(!(b.getTeams()[0].getNumActivePieces() > 0)) {
-                    gameState+= "\nYOU WIN!";
+                    gameState+= "\nYOU WIN!\n \n";
                 }
                 else if(!(b.getTeams()[1].getNumActivePieces() > 0)) {
-                    gameState += "\nYou lose :(";
+                    gameState += "\nYou lose :( \n \n";
                 }
                 b = new BackgammonBoard();
                 playAgainstBot();
